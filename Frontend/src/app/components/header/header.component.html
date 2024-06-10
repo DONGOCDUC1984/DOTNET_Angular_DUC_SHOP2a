@@ -1,0 +1,337 @@
+<nav
+  class="navbar navbar-expand-sm navbar-dark fixed-top"
+  style="background-color: brown"
+>
+  <div class="container-fluid">
+    <span
+      data-bs-toggle="offcanvas"
+      data-bs-target="#left-offcanvas"
+      style="
+        font-size: 20px;
+        cursor: pointer;
+        float: left;
+        color: white;
+        margin: 10px;
+      "
+      >&#9776;
+    </span>
+
+    <a class="navbar-brand nav-link" routerLink="">
+      <img
+        [src]="
+          this.productService.CreateImageUrl('Resources\\Images\\shop1.png')
+        "
+        alt="Avatar Logo"
+        style="width: 50px; height: 50px; text-shadow: 3px 3px 3px #ababab"
+        class="rounded border border-primary"
+      />
+      <span
+        style="
+          color: lightgreen;
+          text-shadow: 3px 3px 3px #ababab;
+          font-family: 'Trirong', serif;
+        "
+        class="mt-2"
+      >
+        DUC SHOP
+      </span>
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapsibleNavbar"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a routerLink="" class="nav-link" routerLinkActive="active">
+            <i class="fa-solid fa-house"></i>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a routerLink="contact" class="nav-link" routerLinkActive="active">
+            {{ "Contact" | translate }}
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            routerLink="products"
+            >{{ "Product" | translate }}</a
+          >
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" (click)="Search('1', '0', '0')">
+                {{ "Fruit and vegetable" | translate }}
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="Search('2', '0', '0')">
+                {{ "Bread and cake" | translate }}
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="Search('3', '0', '0')">
+                {{ "Milk" | translate }}
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            routerLink="products"
+            >{{ "Filter products by price" | translate }}</a
+          >
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" (click)="Search('0', '0', '3')">
+                {{ "From" | translate }} $0 {{ "to" | translate }} $3
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="Search('0', '3', '6')">
+                {{ "From" | translate }} $3 {{ "to" | translate }} $6
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="Search('0', '6', '9')">
+                {{ "From" | translate }} $6 {{ "to" | translate }} $9
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="Search('0', '9', '12')">
+                {{ "From" | translate }} $9 {{ "to" | translate }} $12
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown" *ngIf="userService.IsAdmin">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            >{{ "Admin" | translate }}</a
+          >
+          <ul class="dropdown-menu">
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="admin"
+                routerLinkActive="active"
+              >
+                {{ "Admin" | translate }}</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="allorders"
+                routerLinkActive="active"
+              >
+                {{ "All Orders" | translate }}</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="categories"
+                routerLinkActive="active"
+              >
+                {{ "Category" | translate }}</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item mt-2">
+          <form>
+            <select #selectedLang (change)="switchLang(selectedLang.value)">
+              <option
+                *ngFor="let item of translateService.getLangs()"
+                [value]="item"
+                [selected]="item === translateService.currentLang"
+              >
+                <p *ngIf="item == 'en'">English</p>
+                <p *ngIf="item == 'vi'">Tiếng Việt</p>
+              </option>
+            </select>
+          </form>
+        </li>
+      </ul>
+      <!-- <ul class="navbar-nav ms-auto" *ngIf="userDetails"> -->
+      <!-- If I write the above line instead of the following line,
+      it will be slow and not effective  -->
+      <ul class="navbar-nav ms-auto" *ngIf="userService.IsLoggedIn">
+        <li class="nav-item">
+          <div
+            class="nav-link"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#cart"
+          >
+            <span class="badge text-bg-info">
+              {{ cartService.cartLength }}
+            </span>
+            <span class="text-info">
+              <i class="fa-solid fa-cart-shopping"></i>
+            </span>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            ><i class="fa-solid fa-user"></i> {{ userService.UserName }}</a
+          >
+          <ul class="dropdown-menu">
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="user"
+                routerLinkActive="active"
+              >
+                {{ "Profile" | translate }}</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="myorders"
+                routerLinkActive="active"
+              >
+                {{ "Order" | translate }}</a
+              >
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            (click)="userService.onLogout()"
+            class="btn text-light"
+          >
+            {{ "Logout" | translate }}
+          </a>
+        </li>
+      </ul>
+      <!-- <ul class="navbar-nav ms-auto" *ngIf="!userDetails"> -->
+      <!-- If I write the above line instead of the following line,
+      it will be slow and not effective  -->
+      <ul class="navbar-nav ms-auto" *ngIf="!userService.IsLoggedIn">
+        <li class="nav-item">
+          <a routerLink="register" class="nav-link" routerLinkActive="active">
+            {{ "Register" | translate }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="login" class="nav-link" routerLinkActive="active">
+            {{ "Login" | translate }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<app-cart></app-cart>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+<!-- Left off canvas -->
+<div class="offcanvas offcanvas-start" id="left-offcanvas">
+  <div class="offcanvas-header">
+    <h3 class="offcanvas-title">
+      <a class="navbar-brand nav-link" routerLink="">
+        <img
+          [src]="
+            this.productService.CreateImageUrl('Resources\\Images\\shop1.png')
+          "
+          alt="Avatar Logo"
+          style="width: 50px; height: 50px; text-shadow: 3px 3px 3px #ababab"
+          class="rounded border border-primary"
+        />
+        <span
+          style="
+            color: lightgreen;
+            text-shadow: 3px 3px 3px #ababab;
+            font-family: 'Trirong', serif;
+          "
+          class="mt-2"
+        >
+          DUC SHOP
+        </span>
+      </a>
+    </h3>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+    ></button>
+  </div>
+  <div class="offcanvas-body d-flex flex-column">
+    <a routerLink="/" class="nav-link" routerLinkActive="active">
+      <i class="fa fa-fw fa-home"></i> Home
+    </a>
+    <a routerLink="contact" class="nav-link" routerLinkActive="active">
+      <i class="fa fa-fw fa-envelope"></i>{{ "Contact" | translate }}
+    </a>
+    <button class="btn btn-secondary" type="button">A Button</button>
+  </div>
+</div>
+<!-- End of left off canvas -->
+
+<!--Footer  -->
+
+<div id="Footer">
+  <div id="Footerp1">
+    <h3>{{ "Contact us" | translate }}</h3>
+    <p><i class="fa-solid fa-phone"></i> {{ "Tel" | translate }}: 001122XXYY</p>
+    <p>
+      <i class="fa-solid fa-envelope"></i> {{ "Email" | translate }}:
+      ducshop@example.com
+    </p>
+    <p>
+      <i class="fa-sharp fa-solid fa-location-dot"></i>
+      {{ "Address" | translate }}: ABC Street
+    </p>
+  </div>
+
+  <div id="Footerp2">
+    <h3>{{ "Follow DUC SHOP on" | translate }}:</h3>
+    <div id="Footerp2icons">
+      <a href="#">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+      <a href="#">
+        <i class="fa-brands fa-twitter"></i>
+      </a>
+      <a href="#">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a href="#">
+        <i class="fa-brands fa-linkedin"></i>
+      </a>
+      <a href="#">
+        <i class="fa-brands fa-youtube"></i>
+      </a>
+      <a href="#">
+        <i class="fa-brands fa-tiktok"></i>
+      </a>
+      <a href="#">
+        <img src="https://img.icons8.com/ios-filled/30/000000/zalo.png" />
+      </a>
+    </div>
+  </div>
+</div>
+<br />
+<!--End of Footer  -->

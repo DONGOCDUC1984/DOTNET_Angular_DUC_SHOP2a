@@ -1,0 +1,41 @@
+<br /><br /><br /><br />
+<div class="container">
+  <h3 class="text-center" *ngIf="id">Update Category</h3>
+  <h3 class="text-center" *ngIf="!id">Create Category</h3>
+  <button class="btn btn-success" routerLink="/categories">
+    Back to categories
+  </button>
+  <form [formGroup]="myForm" (ngSubmit)="Submit()">
+    <input type="hidden" class="form-control" formControlName="id" />
+    <div class="mb-3 mt-3">
+      <label class="form-label">Name:</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter Name"
+        formControlName="name"
+      />
+      <p
+        class="warning"
+        *ngIf="myForm.get('name')?.invalid && myForm.get('name')?.touched"
+      >
+        Name is required
+      </p>
+    </div>
+    <button
+      [disabled]="myForm.invalid"
+      type="submit"
+      class="btn btn-primary mt-2"
+    >
+      Submit
+    </button>
+    <!-- If the submit button is below the following p , there will be an error: the button will not be disabled  -->
+    <p *ngIf="status.statusCode == 0">
+      {{ status.message }}
+    </p>
+
+    <div class="text-center">
+      <div *ngIf="service.isSpinner" class="spinner-border text-primary"></div>
+    </div>
+  </form>
+</div>

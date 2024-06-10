@@ -1,0 +1,45 @@
+<br /><br /><br /><br />
+
+<div class="container">
+  <h3 class="text-center">Categories</h3>
+  <div *ngIf="service.message1 != ''" class="alert alert-success">
+    <strong>Success!</strong> {{ service.message1 }}
+  </div>
+
+  <div class="text-center">
+    <div *ngIf="service.isSpinner" class="spinner-border text-primary"></div>
+  </div>
+  <div class="text-center">
+    <div *ngIf="isSpinner2" class="spinner-border text-success"></div>
+  </div>
+  <button class="btn btn-success mb-2" routerLink="/add-category">
+    <i class="fa-solid fa-plus"></i> Create a new category
+  </button>
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th class="col-8">Name</th>
+        <th class="col-3">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of categories; index as i">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+
+        <td>
+          <button (click)="Edit(item.id)" class="btn btn-primary me-2">
+            <i class="fa-solid fa-pen-to-square"></i>
+            Edit
+          </button>
+
+          <button (click)="Delete(item.id, i)" class="btn btn-danger">
+            <i class="fa-solid fa-trash"></i>
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

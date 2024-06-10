@@ -1,0 +1,105 @@
+<div class="offcanvas offcanvas-end" id="cart" style="width: 450px">
+  <div class="offcanvas-header">
+    <h3 class="offcanvas-title">
+      <i class="fa-solid fa-cart-shopping"></i> Cart
+    </h3>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="col-1">ID</th>
+          <th class="col-2">Name</th>
+          <th class="col-2">Price</th>
+          <th class="col-2">Quantity</th>
+          <th class="col-2">Sum</th>
+          <th class="col-3">Action</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="cartService.cart != null">
+        <tr *ngFor="let item of cartService.cart.cartItems">
+          <td>{{ item.product.id }}</td>
+          <td>{{ item.product.name }}</td>
+          <td>{{ item.product.price | currency }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.product.price * item.quantity | currency }}</td>
+          <td>
+            <button
+              class="btn btn-primary btn-sm m-1"
+              (click)="DecreaseCartItem(item.product.id)"
+            >
+              -
+            </button>
+            <button
+              class="btn btn-success btn-sm m-1"
+              (click)="AddCartItem(item.product.id)"
+            >
+              +
+            </button>
+            <button
+              class="btn btn-danger btn-sm m-1"
+              (click)="RemoveCartItem(item.product.id)"
+            >
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="cartService.cart != null">
+      Total cost : {{ cartService.totalCost | currency }}
+    </p>
+
+    <form class="mb-4" [formGroup]="myForm" (ngSubmit)="Submit()">
+      <div class="form-group">
+        <label>Tel :</label>
+        <br />
+        <input
+          type="text"
+          placeholder="{{ 'Tel' | translate }}"
+          formControlName="userTel"
+        />
+        <p
+          class="text-danger"
+          *ngIf="
+            (f['userTel']?.touched || f['userTel']?.dirty) &&
+            f['userTel']?.invalid
+          "
+        >
+          Tel is required
+        </p>
+      </div>
+      <div class="form-group">
+        <label> Address :</label>
+        <br />
+        <input
+          type="text"
+          placeholder="{{ 'Address' | translate }}"
+          formControlName="userAddress"
+        />
+        <p
+          class="text-danger"
+          *ngIf="
+            (f['userAddress']?.touched || f['userAddress']?.dirty) &&
+            f['userAddress']?.invalid
+          "
+        >
+          Address is required
+        </p>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-success mt-2"
+        [disabled]="myForm.invalid"
+      >
+        Order now
+      </button>
+    </form>
+  </div>
+</div>

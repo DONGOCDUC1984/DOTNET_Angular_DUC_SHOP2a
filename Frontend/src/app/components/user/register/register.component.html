@@ -1,0 +1,84 @@
+<br /><br /><br /><br />
+<div *ngIf="message1 != ''" class="alert alert-danger">
+  <strong>Error:!</strong> {{ message1 }}
+</div>
+<form [formGroup]="myForm" (ngSubmit)="Submit()">
+  <div class="form-group">
+    <label>Username:</label>
+    <br />
+    <input type="text" placeholder="Username" formControlName="username" />
+    <p
+      class="text-danger"
+      *ngIf="f['username']?.touched && f['username']?.errors?.['required']"
+    >
+      Username is required
+    </p>
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <br />
+    <input type="email" placeholder="Email" formControlName="email" />
+    <p
+      class="text-danger"
+      *ngIf="f['email']?.touched && f['email']?.errors?.['email']"
+    >
+      Email is invalid
+    </p>
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <br />
+    <input
+      [type]="this.userService.passWordType"
+      placeholder="Password"
+      formControlName="password"
+    />
+    <i
+      style="margin-left: -25px"
+      [class]="this.userService.eyeIcon"
+      (click)="this.userService.togglePassword()"
+    ></i>
+    <p
+      class="text-danger"
+      *ngIf="f['password']?.touched && f['password']?.errors?.['required']"
+    >
+      Password is required and should contain at least 4 characters
+    </p>
+  </div>
+
+  <div class="form-group">
+    <label> Confirm Password </label>
+    <br />
+    <input
+      [type]="this.userService.passWordType"
+      placeholder="Confirm Password "
+      formControlName="confirmPassword"
+    /><i
+      style="margin-left: -25px"
+      [class]="this.userService.eyeIcon"
+      (click)="this.userService.togglePassword()"
+    ></i>
+    <p
+      class="text-danger"
+      *ngIf="f['confirmPassword']?.touched && f['confirmPassword']?.errors?.['required']"
+    >
+      ConfirmPassword is required
+    </p>
+    <p
+      class="text-danger"
+      *ngIf="
+        f['confirmPassword']?.touched &&
+        myForm.value.password != myForm.value.confirmPassword
+      "
+    >
+      Confirm Password does not match
+    </p>
+  </div>
+  <button
+    type="submit"
+    class="btn btn-success mt-2"
+    [disabled]="myForm.invalid"
+  >
+    Register
+  </button>
+</form>

@@ -1,0 +1,73 @@
+<br /><br /><br /><br />
+<div class="container">
+  <h3 class="text-center" *ngIf="id">Update Product</h3>
+  <h3 class="text-center" *ngIf="!id">Create Product</h3>
+  <button class="btn btn-success" routerLink="/products">
+    Back to products
+  </button>
+
+  <form [formGroup]="myForm" (ngSubmit)="Submit()">
+    <input type="hidden" class="form-control" formControlName="id" />
+    <div class="mb-3 mt-3">
+      <label class="form-label">Name:</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter Name"
+        formControlName="name"
+      />
+      <p class="warning" *ngIf="f['name']?.invalid && f['name']?.touched">
+        Name is required
+      </p>
+    </div>
+
+    <div class="mb-3 mt-3">
+      <label class="form-label">Price:</label>
+      <input
+        type="number"
+        step="0.01"
+        class="form-control"
+        placeholder="Enter Price"
+        formControlName="price"
+      />
+      <p class="warning" *ngIf="f['price']?.invalid && f['price']?.touched">
+        Price is required
+      </p>
+    </div>
+    <div class="mb-3 mt-3">
+      <label class="form-label">Category:</label>
+      <select type="text" formControlName="categoryId" class="form-select">
+        <option value="">--Select--</option>
+        <option *ngFor="let item of categories" [value]="item.id">
+          {{ item.name }}
+        </option>
+      </select>
+      <p
+        class="warning"
+        *ngIf="f['categoryId']?.invalid && f['categoryId']?.touched"
+      >
+        Category is required
+      </p>
+    </div>
+
+    <button
+      [disabled]="myForm.invalid"
+      type="submit"
+      class="btn btn-primary mt-2"
+    >
+      Submit
+    </button>
+    <!-- If the submit button is below the following p , there will be an error: the button will not be disabled  -->
+
+    <p *ngIf="status.statusCode == 0">
+      {{ status.message }}
+    </p>
+
+    <div class="text-center">
+      <div
+        *ngIf="productService.isSpinner"
+        class="spinner-border text-primary"
+      ></div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,12 @@
+<br /><br /><br /><br />
+<h3>Profile</h3>
+<div class="card m-5 shadow" style="width: 18rem" *ngIf="userDetails">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <strong>Username: </strong>{{ userDetails.userName }}
+    </li>
+    <li class="list-group-item">
+      <strong>Email : </strong>{{ userDetails.email }}
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,38 @@
+#Footer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  height: 200px;
+  margin-bottom: 0px;
+
+  background-color: white;
+}
+
+#Footer h3 {
+  color: darkgreen;
+  font-weight: bold;
+}
+
+#Footerp2 h3 {
+  margin-left: 15px;
+}
+#Footerp2icons {
+  display: flex;
+  flex-direction: row;
+}
+#Footerp2icons a {
+  font-size: 30px;
+  padding: 3px;
+  color: black;
+  margin: 2px;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+#Footerp2icons a:hover {
+  background-color: green;
+  color: white;
+}

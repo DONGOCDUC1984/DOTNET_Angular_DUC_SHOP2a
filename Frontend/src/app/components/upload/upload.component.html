@@ -1,0 +1,19 @@
+<div>
+  <input
+    type="file"
+    #file
+    placeholder="Choose a file"
+    accept="image/*"
+    (change)="uploadFile(file.files)"
+    style="display: none"
+    multiple
+  />
+  <button class="btn btn-success" (click)="file.click()">
+    <i class="fa-solid fa-upload"></i> {{ "Upload Image" | translate }}
+  </button>
+  <br />
+  <span class="upload" *ngIf="progress > 0"> {{ progress }}% </span>
+  <span class="upload" *ngIf="message">
+    {{ message }}
+  </span>
+</div>

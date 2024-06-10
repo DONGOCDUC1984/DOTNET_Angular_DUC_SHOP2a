@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\DOTNET_Angular_DUC_SHOP2a.props" />
+</Project>

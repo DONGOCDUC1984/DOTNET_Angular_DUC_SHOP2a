@@ -1,0 +1,49 @@
+<!-- DetailsModal -->
+<div class="modal fade" id="DetailsModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Details</h4>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-8">
+            <p>ID : {{ product.id }}</p>
+            <p>Name : {{ product.name }}</p>
+            <p>Description : {{ product.description }}</p>
+            <p>Price : {{ product.price }}</p>
+            <p>Category : {{ product.category.name }}</p>
+            <p>
+              Province/City :
+              {{ product.district.provinceCity.name }}
+            </p>
+            <p>District : {{ product.district.name }}</p>
+          </div>
+          <div class="col-4">
+            <img
+              [src]="this.productService.CreateImageUrl(product.imageUrl)"
+              alt="picture"
+              style="width: 100px; height: 100px"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of DetailsModal -->
